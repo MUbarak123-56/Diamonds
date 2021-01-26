@@ -1,0 +1,67 @@
+---
+title: "Diamonds Exploratory Data Analysis"
+output: pdf_document
+---
+
+# Diamonds EDA
+
+The goal of this document is to explore the diamonds dataset. First, we begin by loading the important packages
+
+```{r, loac}
+library(tidyverse)
+```
+## Checking out the first 10 rows of the dataset
+
+```{r}
+head(diamonds, 10)
+df <- diamonds
+```
+
+### A bar chart for the diamond's cut
+
+```{r, fig.height = 8, fig.width=12}
+bar_cut <- ggplot(df) +
+  geom_bar(aes(x = cut), fill = "blue") +
+  labs(title = "Ideal cut diamonds exist in abundance compared to others", x = "cut", y = "count")
+bar_cut
+ggsave("bar_cut.png", bar_cut)
+```
+
+
+### A histogram of diamond's price
+
+```{r}
+ggplot(df) +
+  geom_histogram(aes(x = price), color = "blue") +
+  facet_wrap(~cut, nrow = 2) + 
+  labs(title = "A histogram of diamond's prices", x = "Price")
+max(df$price)
+```
+### Bar chart for clarity based on cut
+
+```{r}
+ggplot(df) +
+  geom_bar(aes(x = clarity, fill = cut), position = "fill") +
+  labs(title = "Bar chart for clarity based on cut", x = "clarity") +
+  coord_polar() +
+  theme_classic()
+```
+### Price vs Carat
+
+```{r}
+model <- lm(price ~ carat, data = df)
+coeff <- coef(model)
+ggplot(df) +
+  geom_point(aes(x = carat, y = price), color = "blue") +
+  geom_abline(intercept = coeff[1], slope = coeff[2], color = "red") +
+  labs(title = "Price vs Carat", x = "Carat", y = "Price")
+```
+### Price vs Carat based on cut
+
+```{r, fig.width = 12, fig.height= 8}
+ggplot(df) +
+  geom_point(aes(x = carat, y = price, color = cut)) +
+  facet_wrap(~clarity, nrow = 2) +
+  labs(title = "Price vs Carat", x = "Carat", y = "Price")
+```
+
