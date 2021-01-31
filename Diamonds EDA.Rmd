@@ -35,7 +35,6 @@ ggplot(df) +
   geom_histogram(aes(x = price), color = "blue") +
   facet_wrap(~cut, nrow = 2) + 
   labs(title = "A histogram of diamond's prices", x = "Price")
-max(df$price)
 ```
 ### Bar chart for clarity based on cut
 
@@ -64,4 +63,20 @@ ggplot(df) +
   facet_wrap(~clarity, nrow = 2) +
   labs(title = "Price vs Carat", x = "Carat", y = "Price")
 ```
+
+
+```{r}
+colnames(df)
+nam <- c("carat", "x", "y", "z")
+max <- c(max(df$carat), max(df$x), max(df$y), max(df$z))
+max_df <- data.frame(name = nam, max = max)
+max_df
+```
+
+```{r}
+unique(df$color)
+unique(df$clarity)
+```
+
+
 
