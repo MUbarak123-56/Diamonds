@@ -38,12 +38,14 @@ ggplot(df) +
 ```
 ### Bar chart for clarity based on cut
 
-```{r}
-ggplot(df) +
+```{r, fig.height = 8, fig.width = 12}
+df_bar <- ggplot(df) +
   geom_bar(aes(x = clarity, fill = cut), position = "fill") +
   labs(title = "Bar chart for clarity based on cut", x = "clarity") +
   coord_polar() +
-  theme_classic()
+  theme_gray()
+df_bar
+ggsave("bar-chart.png", df_bar)
 ```
 ### Price vs Carat
 
